@@ -1,5 +1,5 @@
 import { Sequelize, Options } from "sequelize"
-import dbConfig, { DatabaseConnection } from "../../config/db"
+import dbConfig, { DatabaseConnection } from "../config/db"
 import { env, enableLogging, isDevelopment, isTesting } from "@app/util"
 import { UserSequelizeModel, FcmTokenSequelizeModel } from "@app/model"
 

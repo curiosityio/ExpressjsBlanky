@@ -31,6 +31,8 @@ defaultEntryPoints = ["https", "http"]
 [acme]
    email = "foo@gmail.com"
    storage = "acme.json"   
+   # Comment below to switch to prod server instead of staging below
+   # caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
    onHostRule = true
    entryPoint = "https"
 
@@ -38,6 +40,8 @@ defaultEntryPoints = ["https", "http"]
       provider = "cloudflare"
       delayBeforeCheck = 0
 
+   # Specify domain names here, or, because onHostRule is set to true, you can add domains through docker container starting
+   # as long as the docker container contains the appropriate docker labels to enable. 
    [[acme.domains]]
-      main = "*.foo.com"
+      main = "*.foo.com" # must use dns challenger for wildcard domains. 
       sans = ["foo.com"]

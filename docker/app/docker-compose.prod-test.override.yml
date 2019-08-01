@@ -5,3 +5,5 @@ services:
     image: docker-production-image-test
     ports: # Since we are not using nginx-proxy, we need to communicate some way.
       - "5000:5000"
+    environment: 
+      - CI      

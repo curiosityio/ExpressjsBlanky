@@ -9,14 +9,15 @@ import { AddressInfo } from "net"
 import passport from "passport"
 import trimBody from "connect-trim-body"
 import helmet from "helmet"
-import { ErrorResponseHandlerMiddleware, ConvertCaseMiddleware } from "./middleware"
+import {
+  DefaultErrorHandler,
+  ErrorResponseHandlerMiddleware,
+  TransformResponseBodyMiddleware
+} from "./middleware"
 import { Server } from "http"
 import controllers from "./controller"
 import "./middleware/auth"
 import * as logger from "./logger"
-import { isProduction, isStaging } from "./util"
-import { SystemError } from "./responses"
-import { ErrorRequestHandler } from "express-serve-static-core"
 import compression from "compression"
 
 export const startServer = (): Server => {
@@ -32,10 +33,10 @@ export const startServer = (): Server => {
   app.use(passport.initialize())
   app.use(helmet())
   app.use(compression())
+  app.use(TransformResponseBodyMiddleware)
 
   app.use(controllers)
 
-  app.use(ConvertCaseMiddleware)
   app.use(ErrorResponseHandlerMiddleware)
 
   logger.initAppAfterMiddleware(app)
@@ -43,26 +44,14 @@ export const startServer = (): Server => {
   process.on("uncaughtException", (err: Error) => {
     logger.error(err)
   })
-
-  app.use(((err, req, res, next) => {
-    if (err) {
-      logger.error(err)
-
-      if (res.headersSent) {
-        next(err)
-      } else {
-        const message = isProduction || isStaging ? "System error. Please try again." : err.message
-        res.status(SystemError.code).send(new SystemError(message))
-      }
-    }
-  }) as ErrorRequestHandler)
+  app.use(DefaultErrorHandler)
 
   app.set("port", 5000)
 
   let server = app.listen(app.get("port"), () => {
     logger.debug(
-      `Server started. Listening at: ${(<AddressInfo>server.address()).address}:${
-        (<AddressInfo>server.address()).port
+      `Server started. Listening at: ${(server.address() as AddressInfo).address}:${
+        (server.address() as AddressInfo).port
       }`
     )
   })

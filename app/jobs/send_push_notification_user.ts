@@ -6,7 +6,7 @@ import { container, ID, NAME } from "@app/di"
 
 // TODO Uncomment the 3 lines below to configure Firebase Cloud Messaging.
 // admin.initializeApp({
-//   credential: admin.credential.cert(require('../../../config/firebase_key.json'))
+//   credential: admin.credential.cert(require('../config/firebase_key.json'))
 // })
 
 const sendPushNotificationToDevices = async (

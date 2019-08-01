@@ -11,9 +11,12 @@ env:
     - STAGING_DEPLOY_HOST=111.111.111.111
     - PROD_DEPLOY_USER=core
     - PROD_DEPLOY_HOST=222.222.222.222
-    - AWS_ACCESS_KEY_ID=fofofof
-    - AWS_SECRET_ACCESS_KEY=fofofof
-    - HONEY_BADGER_API_KEY=12345    
+    # AWS_ACCESS_KEY_ID
+    - secure: "fefefe"
+    # AWS_SECRET_ACCESS_KEY
+    - secure: "fefefe"
+    # HONEY_BADGER_API_KEY
+    - secure: "fefefe"
     # DANGER_GITHUB_API_TOKEN
     - secure: "fefefe"
 before_install:
@@ -35,16 +38,22 @@ cache:
   bundler: true 
   directories:
     - node_modules
-    - vendor/bundle
+before_script:
+  # Disable services enabled by default
+  # https://stackoverflow.com/a/27410479/1486374
+  - sudo /etc/init.d/mysql stop
+  - sudo /etc/init.d/postgresql stop  
+
 jobs:
   include:
     - stage: danger
       script: danger --fail-on-errors=true
     - stage: tests
       script: ruby bin/ci/tests.rb
+    - # tests 
       script: ruby bin/ci/test_docker_container.rb    
     - stage: deploy
-      script: ./bin/ci/deploy.rb
+      script: ruby ./bin/ci/deploy.rb
 
 stages:
   - name: tests 

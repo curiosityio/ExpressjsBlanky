@@ -17,7 +17,7 @@ const emailSenderMock: EmailSender = {
   sendWelcome: sendWelcomeMock
 }
 
-const overrideDependencies = () => {
+const overrideDependencies = (): void => {
   container.rebind(ID.EMAIL_SENDER).toConstantValue(emailSenderMock)
 }
 describe(`Receive login email passwordless token. ${endpointVersion}`, () => {
@@ -77,7 +77,7 @@ describe(`Receive login email passwordless token. ${endpointVersion}`, () => {
 })
 
 describe(`Get access token from passwordless token. ${endpointVersion}`, () => {
-  const endpoint: string = "/user/login/token"
+  const endpoint = "/user/login/token"
 
   it("should error missing param", async () => {
     await setup([], overrideDependencies)
@@ -125,7 +125,7 @@ describe(`Get access token from passwordless token. ${endpointVersion}`, () => {
 })
 
 describe(`Update FCM token. ${endpointVersion}`, () => {
-  const endpoint: string = "/user/fcm"
+  const endpoint = "/user/fcm"
 
   it("should error no access token.", async () => {
     await setup()

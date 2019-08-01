@@ -40,9 +40,7 @@ export const loginEmail: Endpoint = {
     const createUser = async () => {
       const user = await UserModel.findUserOrCreateByEmail(body.email)
       const loginLink = `${constants.login.loginLinkPrefix}${user.passwordToken!}`
-      const passwordlessLoginLink = `${constants.login.dynamicLinkUrl}/?link=${loginLink}&apn=${
-        constants.androidAppPackageName
-      }&ibi=${constants.iosAppBundleId}`
+      const passwordlessLoginLink = `${constants.login.dynamicLinkUrl}/?link=${loginLink}&apn=${constants.androidAppPackageName}&ibi=${constants.iosAppBundleId}`
 
       let email = container.get<EmailSender>(ID.EMAIL_SENDER)
       await email.sendWelcome(user.email, {

@@ -14,7 +14,7 @@ const testConnection: DatabaseConnection = {
   database: process.env.POSTGRES_DB!,
   host: "localhost",
   port: 5433,
-  dialect: "postgres",
+  dialect: "postgres"
 }
 
 const developmentConnection: DatabaseConnection = {
@@ -23,7 +23,7 @@ const developmentConnection: DatabaseConnection = {
   database: process.env.POSTGRES_DB!,
   host: "localhost",
   port: 5432,
-  dialect: "postgres",
+  dialect: "postgres"
 }
 
 const stagingConnection: DatabaseConnection = {
@@ -32,7 +32,7 @@ const stagingConnection: DatabaseConnection = {
   database: process.env.POSTGRES_DB!,
   host: process.env.DATABASE_HOST!,
   port: 5432,
-  dialect: "postgres",
+  dialect: "postgres"
 }
 
 const productionConnection: DatabaseConnection = {
@@ -41,7 +41,7 @@ const productionConnection: DatabaseConnection = {
   database: process.env.POSTGRES_DB!,
   host: process.env.DATABASE_HOST!,
   port: 5432,
-  dialect: "postgres",
+  dialect: "postgres"
 }
 
 const connections: {
@@ -53,7 +53,10 @@ const connections: {
   development: developmentConnection,
   production: productionConnection,
   staging: stagingConnection,
-  test: testConnection,
+  test: testConnection
 }
 
+// Exists for sequelize-cli to find the connections as the main export.
+// Note: Must have the export default be the same object as the module.exports or, module.exports will export erase all other exports.
 export default connections
+module.exports = connections

@@ -19,7 +19,7 @@ describe(`Create user ${endpointVersion}`, () => {
     sendWelcome: sendWelcomeMock
   }
 
-  const overrideDependencies = () => {
+  const overrideDependencies = (): void => {
     container.rebind(ID.EMAIL_SENDER).toConstantValue(emailSenderMock)
   }
 

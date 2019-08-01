@@ -4,7 +4,9 @@ services:
   reverse-proxy:
     image: traefik:latest
     restart: always
-    container_name: traefik
+    container_name: reverse-proxy
+    command: 
+      - --docker
 
     env_file:
       - cloudflare.env
@@ -18,10 +20,9 @@ services:
       - external
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - traefik.toml:/traefik.toml
-      - acme.json:/acme.json
-    labels:
-      - 'traefik.backend=traefik'
+      - ./traefik.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    labels:      
       - 'traefik.docker.network=external'
       - 'traefik.enable=true'
       - 'traefik.frontend.rule=Host:traefik.foo.com'
