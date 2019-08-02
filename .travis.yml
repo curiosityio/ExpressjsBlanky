@@ -5,12 +5,13 @@ node_js:
 services:
   - docker
 env:
-  global:        
+  global:
     - DOCKER_COMPOSE_VERSION=1.24.1
     - STAGING_DEPLOY_USER=core
     - STAGING_DEPLOY_HOST=111.111.111.111
     - PROD_DEPLOY_USER=core
     - PROD_DEPLOY_HOST=222.222.222.222
+    - RUNNING_DATABASE=true
     # AWS_ACCESS_KEY_ID
     - secure: "fefefe"
     # AWS_SECRET_ACCESS_KEY
@@ -20,6 +21,8 @@ env:
     # DANGER_GITHUB_API_TOKEN
     - secure: "fefefe"
 before_install:
+  # Create .env files for testing purposes on CI server
+  - cp .env.staging.example .env.staging; cp .env.production.example .env.production; 
   # Install docker compose custom version.
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose

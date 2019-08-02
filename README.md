@@ -91,6 +91,8 @@ I am a fan of [Postgres](https://www.postgresql.org/). Stable, SQL based databas
 
 ExpressjsBlanky is setup to run Postgres for development, testing, staging, and production environments. Because the same database is always used, you can expect less issues at runtime in production.
 
+If you don't want to use a database, search for the environment variable `RUNNING_DATABASE` in this project and set it to false there. This may be easier then removing all of the database configuration embedded into this application.
+
 # Services
 
 - [Firebase Cloud Messaging (sending push notifications)](https://firebase.google.com/docs/cloud-messaging/admin/) - Send push notifications to Android or iOS apps from API.
@@ -307,6 +309,12 @@ It is pretty easy to use. View the [official docs](http://apidocjs.com/) on the 
 # Backups
 
 Database backups are configured for you already to dump daily and upload to AWS S3. Above in the [services](#Services) section, follow the directions for AWS S3 to configure database backups.
+
+Then, run this command on your server after your start your production database:
+
+```
+npm run db:production:backups
+```
 
 ## Author
 

@@ -58,5 +58,13 @@
     ],
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/ban-types": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.ts"],
+      "rules": {
+        "@typescript-eslint/camelcase": "off"
+      }
+    }
+  ]
 }

@@ -48,10 +48,10 @@ describe(`Receive login email passwordless token. ${endpointVersion}`, () => {
       .expect(Success.code)
       .then(() => {
         expect(sendWelcomeMock).toBeCalledTimes(1)
-        expect(sendWelcomeMock.mock.calls[0][1].app_login_link).toEqual(
+        expect(sendWelcomeMock.mock.calls[0][1].appLoginLink).toEqual(
           expect.stringContaining(constants.login.dynamicLinkUrl)
         )
-        expect(sendWelcomeMock.mock.calls[0][1].app_login_link).toEqual(
+        expect(sendWelcomeMock.mock.calls[0][1].appLoginLink).toEqual(
           expect.stringContaining(constants.login.loginLinkPrefix)
         )
       })
@@ -66,10 +66,10 @@ describe(`Receive login email passwordless token. ${endpointVersion}`, () => {
       .expect(Success.code)
       .then(() => {
         expect(sendWelcomeMock).toBeCalledTimes(1)
-        expect(sendWelcomeMock.mock.calls[0][1].app_login_link).toEqual(
+        expect(sendWelcomeMock.mock.calls[0][1].appLoginLink).toEqual(
           expect.stringContaining(constants.login.dynamicLinkUrl)
         )
-        expect(sendWelcomeMock.mock.calls[0][1].app_login_link).toEqual(
+        expect(sendWelcomeMock.mock.calls[0][1].appLoginLink).toEqual(
           expect.stringContaining(constants.login.loginLinkPrefix)
         )
       })
@@ -119,7 +119,7 @@ describe(`Get access token from passwordless token. ${endpointVersion}`, () => {
       .expect(Success.code)
       .then(async res => {
         const testUserAfterCall = await UserModel.findUserById(testUser.id)
-        expect(res.body.user).toEqual(testUserAfterCall!.privateRepresentation())
+        expect(res.body.user).toEqualDecamelize(testUserAfterCall!.privateRepresentation())
       })
   })
 })

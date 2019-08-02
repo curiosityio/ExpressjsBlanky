@@ -37,14 +37,14 @@ export const loginEmail: Endpoint = {
       email: string
     } = req.body
 
-    const createUser = async () => {
+    const createUser = async (): Promise<void> => {
       const user = await UserModel.findUserOrCreateByEmail(body.email)
       const loginLink = `${constants.login.loginLinkPrefix}${user.passwordToken!}`
       const passwordlessLoginLink = `${constants.login.dynamicLinkUrl}/?link=${loginLink}&apn=${constants.androidAppPackageName}&ibi=${constants.iosAppBundleId}`
 
       let email = container.get<EmailSender>(ID.EMAIL_SENDER)
       await email.sendWelcome(user.email, {
-        app_login_link: passwordlessLoginLink
+        appLoginLink: passwordlessLoginLink
       })
 
       return Promise.reject(
@@ -69,7 +69,7 @@ export const loginPasswordlessToken: Endpoint = {
       passwordless_token: string
     } = req.body
 
-    const redeemToken = async () => {
+    const redeemToken = async (): Promise<void> => {
       var user = await UserModel.findByPasswordlessToken(body.passwordless_token)
       if (!user || !user.passwordTokenCreated) {
         return Promise.reject(
@@ -106,7 +106,7 @@ export const updateFcmToken: Endpoint = {
       token: string
     } = req.body
 
-    const updateToken = async () => {
+    const updateToken = async (): Promise<void> => {
       const existingTokens = await FcmTokenModel.findByUserId(req.user.id)
 
       if (existingTokens.length >= constants.maxFcmTokensPerUser) {

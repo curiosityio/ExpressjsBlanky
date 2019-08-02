@@ -16,14 +16,14 @@ if (!API_KEY || !DOMAIN || !FROM_EMAIL_NAME || !FROM_EMAIL) {
 const postmarkClient = new ServerClient(API_KEY)
 
 export interface EmailSender {
-  sendWelcome(to: string, params: { app_login_link: string }): Promise<void>
+  sendWelcome(to: string, params: { appLoginLink: string }): Promise<void>
 }
 
 @injectable()
 class AppEmailSender implements EmailSender {
   constructor() {}
 
-  async sendWelcome(to: string, params: { app_login_link: string }): Promise<void> {
+  async sendWelcome(to: string, params: { appLoginLink: string }): Promise<void> {
     await postmarkClient.sendEmailWithTemplate({
       TemplateId: 1234567,
       From: FROM_EMAIL!,

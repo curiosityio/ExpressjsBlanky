@@ -16,7 +16,7 @@ export class FcmTokenFakeDataGenerator extends FcmTokenModel implements FakeData
     return fakeModel
   }
 
-  async create() {
+  async create(): Promise<void> {
     await createDependencies(this.dependencies)
 
     await this.findOrCreateSelf()

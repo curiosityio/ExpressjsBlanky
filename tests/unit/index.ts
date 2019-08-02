@@ -1,5 +1,6 @@
 import "@app/util" // Setup .env
 import { isTesting } from "@app/util"
+import "../index"
 
 beforeEach(async () => {
   if (!isTesting) {

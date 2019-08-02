@@ -1,4 +1,5 @@
 import "@app/util" // Setup .env
+import "../index"
 
 import { ADMIN_TOKEN } from "@app/middleware/auth"
 import { isTesting } from "@app/util"

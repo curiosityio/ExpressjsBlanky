@@ -41,7 +41,7 @@ export const addUser: Endpoint = {
       email: string
     } = req.body
 
-    const createUser = async () => {
+    const createUser = async (): Promise<void> => {
       const existingUser = await UserModel.findByEmail(body.email)
       if (existingUser) {
         throw new UserEnteredBadDataError(

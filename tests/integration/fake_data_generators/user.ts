@@ -44,7 +44,7 @@ export class UserFakeDataGenerator extends UserModel implements FakeDataGenerato
     )
   }
 
-  async create() {
+  async create(): Promise<void> {
     await this.findOrCreateSelf()
   }
 }
